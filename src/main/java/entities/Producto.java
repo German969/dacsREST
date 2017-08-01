@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -68,6 +69,12 @@ public class Producto {
 			inverseJoinColumns = { @JoinColumn(name = "id_pedido",
 					nullable = false, updatable = false) })
 	private List<Pedido> pedidos;
+	
+	@Transient
+	private boolean canEdit;
+	
+	@Transient
+	private boolean newProducto;
 	
 	public Producto(){
 		
@@ -164,6 +171,22 @@ public class Producto {
 
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
+	}
+	
+	public boolean isCanEdit() {
+		return canEdit;
+	}
+
+	public void setCanEdit(boolean canEdit) {
+		this.canEdit = canEdit;
+	}
+	
+	public boolean isNewProducto() {
+		return newProducto;
+	}
+
+	public void setNewProducto(boolean newProducto) {
+		this.newProducto = newProducto;
 	}
 	
 }

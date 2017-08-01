@@ -1,0 +1,208 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Webapp!</title>
+	<h:outputScript library="js" name="msj.js" />
+	<h:outputStylesheet library="css" name="styles.css" />
+	<h:outputStylesheet library="css" name="bt-style.css" />
+</h:head>
+
+<h:body>
+
+	<h2>Welcome</h2>
+
+	<h2>Usuarios</h2>
+
+	<h:form>
+	Filter: 
+		<h:inputText id="filterInput" value="#{usuarioBean.filter}" />
+	By:
+		<h:selectOneMenu value="#{usuarioBean.filterBy}">
+			<f:selectItem itemValue="1" itemLabel="ID Usuario" />
+			<f:selectItem itemValue="2" itemLabel="Nombre" />
+			<f:selectItem itemValue="3" itemLabel="Apellido" />
+			<f:selectItem itemValue="4" itemLabel="C.U.I.T." />
+			<f:selectItem itemValue="5" itemLabel="Nombre de usuario" />
+			<f:selectItem itemValue="6" itemLabel="Contraseña" />
+			<f:selectItem itemValue="7" itemLabel="Telefono" />
+			<f:selectItem itemValue="8" itemLabel="Pais" />
+			<f:selectItem itemValue="9" itemLabel="Provincia" />
+			<f:selectItem itemValue="10" itemLabel="Localidad" />
+			<f:selectItem itemValue="11" itemLabel="Codigo Postal" />
+			<f:selectItem itemValue="12" itemLabel="Direccion" />
+			<f:selectItem itemValue="13" itemLabel="Rol" />
+		</h:selectOneMenu>
+
+		<h:commandButton id="submit2" value="Filter"
+			action="#{usuarioBean.getByFilter()}">
+		</h:commandButton>
+
+		<h:commandButton id="showAll" value="Show All"
+			action="#{usuarioBean.getAll()}">
+		</h:commandButton>
+
+		<br />
+		<br />
+
+		<h:dataTable value="#{usuarioBean.getAllUsers()}" var="usuario"
+			border="2" styleClass="employeeTable"
+			headerClass="employeeTableHeader"
+			rowClasses="employeeTableOddRow,employeeTableEvenRow">
+			<h:column>
+				<f:facet name="header">ID Usuario</f:facet>
+				<h:outputText value="#{usuario.id}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Nombre</f:facet>
+				<h:inputText value="#{usuario.nombre}" size="9"
+					rendered="#{usuario.canEdit}" required="true"
+					requiredMessage="Por favor, inserte el nombre" />
+				<h:outputText value="#{usuario.nombre}"
+					rendered="#{not usuario.canEdit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Apellido</f:facet>
+				<h:inputText value="#{usuario.apellido}" size="9"
+					rendered="#{usuario.canEdit}" required="true"
+					requiredMessage="Por favor, inserte el apellido" />
+				<h:outputText value="#{usuario.apellido}"
+					rendered="#{not usuario.canEdit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">C.U.I.T.</f:facet>
+				<h:inputText value="#{usuario.cuit}" size="9"
+					rendered="#{usuario.canEdit}" required="true"
+					requiredMessage="Por favor, inserte el CUIT o CUIL" />
+				<h:outputText value="#{usuario.cuit}"
+					rendered="#{not usuario.canEdit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">E-mail</f:facet>
+				<h:inputText value="#{usuario.email}" size="9"
+					rendered="#{usuario.canEdit}" required="true"
+					requiredMessage="Por favor, inserte el e-mail">
+				</h:inputText>
+				<h:outputText value="#{usuario.email}"
+					rendered="#{not usuario.canEdit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Nombre de Usuario</f:facet>
+				<h:inputText value="#{usuario.user}" size="9"
+					rendered="#{usuario.canEdit}" required="true"
+					requiredMessage="Por favor, inserte el nombre de usuario" />
+				<h:outputText value="#{usuario.user}"
+					rendered="#{not usuario.canEdit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Contraseña</f:facet>
+				<h:inputText value="#{usuario.password}" size="9"
+					rendered="#{usuario.canEdit}" required="true"
+					requiredMessage="Por favor, inserte la contraseña" />
+				<h:outputText value="#{usuario.password}"
+					rendered="#{not usuario.canEdit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Telefono</f:facet>
+				<h:inputText value="#{usuario.telefono}" size="9"
+					rendered="#{usuario.canEdit}" />
+				<h:outputText value="#{usuario.telefono}"
+					rendered="#{not usuario.canEdit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Pais</f:facet>
+				<h:inputText value="#{usuario.pais}" size="9"
+					rendered="#{usuario.canEdit}" />
+				<h:outputText value="#{usuario.pais}"
+					rendered="#{not usuario.canEdit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Provincia</f:facet>
+				<h:inputText value="#{usuario.provincia}" size="9"
+					rendered="#{usuario.canEdit}" />
+				<h:outputText value="#{usuario.provincia}"
+					rendered="#{not usuario.canEdit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Localidad</f:facet>
+				<h:inputText value="#{usuario.localidad}" size="9"
+					rendered="#{usuario.canEdit}" />
+				<h:outputText value="#{usuario.localidad}"
+					rendered="#{not usuario.canEdit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">C.P.</f:facet>
+				<h:inputText value="#{usuario.codigoPostal}" size="9"
+					rendered="#{usuario.canEdit}" />
+				<h:outputText value="#{usuario.codigoPostal}"
+					rendered="#{not usuario.canEdit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Direccion</f:facet>
+				<h:inputText value="#{usuario.direccion}" size="9"
+					rendered="#{usuario.canEdit}" />
+				<h:outputText value="#{usuario.direccion}"
+					rendered="#{not usuario.canEdit}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Rol</f:facet>
+				<h:selectOneMenu value="#{usuarioBean.nameRol}"
+				rendered="#{usuario.canEdit}">
+					<f:selectItems value="#{usuarioBean.getRoles()}" />
+				</h:selectOneMenu>
+				<!-- <h:inputText value="#{usuarioBean.nameRol}" size="9"
+					rendered="#{usuario.canEdit}" required="true"
+					requiredMessage="Por favor, inserte el rol" /> -->
+				<h:outputText value="#{usuario.rol}"
+					rendered="#{not usuario.canEdit}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Edit</f:facet>
+				<h:commandButton value="Edit"
+					action="#{usuarioBean.editUsuario(usuario)}"
+					rendered="#{not usuario.canEdit}">
+					<f:setPropertyActionListener target="#{usuarioBean.usuario}"
+						value="#{usuario}" />
+				</h:commandButton>
+				<h:commandButton value="Cancel"
+					action="#{usuarioBean.notEditUsuario(usuario)}"
+					rendered="#{usuario.canEdit}">
+				</h:commandButton>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Delete</f:facet>
+				<h:commandButton value="Delete"
+					action="#{usuarioBean.deleteUsuario()}">
+					<f:setPropertyActionListener target="#{usuarioBean.usuario}"
+						value="#{usuario}" />
+				</h:commandButton>
+			</h:column>
+
+		</h:dataTable>
+
+		<h:commandButton value="Save Usuarios"
+			action="#{usuarioBean.saveUsuarios}" />
+
+		<h:commandButton value="New Usuario"
+			action="#{usuarioBean.newUsuario}" />
+
+		<h:messages style="color:red;margin:8px;" />
+
+	</h:form>
+
+	<br />
+
+	<h:form>
+		<h:commandButton action="home.xhtml" value="Return to Home" />
+	</h:form>
+	
+</h:body>
+</html>

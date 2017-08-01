@@ -1,0 +1,138 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Webapp!</title>
+	<h:outputStylesheet library="css" name="styles.css" />
+	<h:outputStylesheet library="css" name="bt-style.css" />
+</h:head>
+
+<h:body>
+
+	<h2>Welcome</h2>
+
+	<h2>Pedidos</h2>
+
+	<h:form>
+	Filter: 
+		<h:inputText id="filterInput" value="#{pedidoBean.filter}" />
+	By:
+		<h:selectOneMenu value="#{pedidoBean.filterBy}">
+			<f:selectItem itemValue="1" itemLabel="ID Pedido" />
+			<f:selectItem itemValue="2" itemLabel="Fecha" />
+			<f:selectItem itemValue="3" itemLabel="Estado" />
+			<f:selectItem itemValue="4" itemLabel="Usuario" />
+		</h:selectOneMenu>
+
+		<h:commandButton id="submit2" value="Filter"
+			action="#{pedidoBean.getByFilter()}">
+		</h:commandButton>
+
+		<h:commandButton id="showAll" value="Show All"
+			action="#{pedidoBean.getAll()}">
+		</h:commandButton>
+
+		<br />
+		<br />
+
+		<h:dataTable value="#{pedidoBean.getAllPedidos()}" var="pedido"
+			border="2" styleClass="employeeTable"
+			headerClass="employeeTableHeader"
+			rowClasses="employeeTableOddRow,employeeTableEvenRow">
+			<h:column>
+				<f:facet name="header">ID Pedido</f:facet>
+				<h:outputText value="#{pedido.id}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Fecha</f:facet>
+				<h:inputText value="#{pedidoBean.stringFecha}" size="9"
+					rendered="#{pedido.canEdit}" required="true"
+					requiredMessage="Por favor, inserte la fecha" />
+				<h:outputText value="#{pedido.fecha}"
+					rendered="#{not pedido.canEdit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Estado</f:facet>
+				<h:inputText value="#{pedido.estado}" size="9"
+					rendered="#{pedido.canEdit}" required="true"
+					requiredMessage="Por favor, inserte el estado" />
+				<h:outputText value="#{pedido.estado}"
+					rendered="#{not pedido.canEdit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Usuario</f:facet>
+				<h:selectOneMenu value="#{pedidoBean.nameUsuario}"
+				rendered="#{pedido.canEdit}">
+					<f:selectItems value="#{pedidoBean.getUsuarios()}" />
+				</h:selectOneMenu>
+				<h:outputText value="#{pedido.usuario}"
+					rendered="#{not pedido.canEdit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Fecha de Pago</f:facet>
+				<h:inputText value="#{pedidoBean.stringFechaPago}" size="9"
+					rendered="#{pedido.canEdit}" required="true"
+					requiredMessage="Por favor, inserte la fecha de pago">
+				</h:inputText>
+				<h:outputText value="#{pedido.fechaPago}"
+					rendered="#{not pedido.canEdit}" />
+			</h:column>
+						
+			<h:column>
+				<f:facet name="header">Medio de Pago</f:facet>
+				<h:selectOneMenu value="#{pedidoBean.nameMediodepago}"
+				rendered="#{pedido.canEdit}">
+					<f:selectItems value="#{pedidoBean.getMediosdepago()}" />
+				</h:selectOneMenu>
+				<h:outputText value="#{pedido.mediodepago}"
+					rendered="#{not pedido.canEdit}" />
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Edit</f:facet>
+				<h:commandButton value="Edit"
+					action="#{pedidoBean.editPedido(pedido)}"
+					rendered="#{not pedido.canEdit}">
+					<f:setPropertyActionListener target="#{pedidoBean.pedido}"
+						value="#{pedido}" />
+				</h:commandButton>
+				<h:commandButton value="Cancel"
+					action="#{pedidoBean.notEditPedido(pedido)}"
+					rendered="#{pedido.canEdit}">
+				</h:commandButton>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Delete</f:facet>
+				<h:commandButton value="Delete"
+					action="#{pedidoBean.deletePedido()}">
+					<f:setPropertyActionListener target="#{pedidoBean.pedido}"
+						value="#{pedido}" />
+				</h:commandButton>
+			</h:column>
+
+		</h:dataTable>
+
+		<h:commandButton value="Save Pedidos"
+			action="#{pedidoBean.savePedidos}" />
+
+		<h:commandButton value="New Pedido"
+			action="#{pedidoBean.newPedido()}" />
+
+		<h:messages style="color:red;margin:8px;" />
+
+	</h:form>
+
+	<br />
+
+	<h:form>
+		<h:commandButton action="home.xhtml" value="Return to Home" />
+	</h:form>
+	
+</h:body>
+</html>

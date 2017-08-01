@@ -11,8 +11,13 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
+import abm.PedidoFilter;
 import entities.Pedido;
+import entities.Pedido_;
 
 @Stateless
 @LocalBean
@@ -73,6 +78,43 @@ public class PedidoDAO {
 			e.printStackTrace();
 			return 0;
 		}
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Pedido> getByFilter(String name, String filterBy) {
+
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+
+		CriteriaQuery<Pedido> query = builder.createQuery(Pedido.class);
+
+		Root<Pedido> root = query.from(Pedido.class);
+
+		Predicate p;
+		
+		PedidoFilter pf = new PedidoFilter();
+		
+		pf.setCod(filterBy);
+		
+		if(filterBy.equals(new String("1"))){
+			
+			int foo = Integer.parseInt(name);
+			
+			p = builder.equal(root.get(Pedido_.id), foo);
+			
+		}else{
+			
+			p = builder.like((Expression<String>) root.get(pf.getAttr()), "%" + name + "%");			
+			
+		}
+
+		query.where(p);
+
+		TypedQuery<Pedido> typedQuery = em.createQuery(query);
+
+		List<Pedido> rl = typedQuery.getResultList();
+
+		return rl;
 
 	}
 

@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -33,6 +34,12 @@ public class Proveedor {
 	@JsonBackReference
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "proveedor")
 	private List<Producto> productos = new ArrayList<Producto>();
+	
+	@Transient
+	private boolean canEdit;
+	
+	@Transient
+	private boolean newProveedor;
 	
 	public Proveedor(){
 		
@@ -72,6 +79,22 @@ public class Proveedor {
 
 	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
+	}
+	
+	public boolean isCanEdit() {
+		return canEdit;
+	}
+
+	public void setCanEdit(boolean canEdit) {
+		this.canEdit = canEdit;
+	}
+	
+	public boolean isNewProveedor() {
+		return newProveedor;
+	}
+
+	public void setNewProveedor(boolean newProveedor) {
+		this.newProveedor = newProveedor;
 	}
 	
 }

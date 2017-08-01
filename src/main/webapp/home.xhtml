@@ -1,0 +1,89 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<!-- http://java.sun.com/jsf/core	http://xmlns.jcp.org/jsf/core
+		http://java.sun.com/jsf/html	http://xmlns.jcp.org/jsf/html
+		http://java.sun.com/jsf/facelets	http://xmlns.jcp.org/jsf/facelets
+		http://java.sun.com/jsf/composite	http://xmlns.jcp.org/jsf/composite
+		http://java.sun.com/jsp/jstl/core	http://xmlns.jcp.org/jsp/jstl/core
+		http://java.sun.com/jsp/jstl/functions	http://xmlns.jcp.org/jsp/jstl/functions -->
+
+<h:head>
+	<title>Webapp!</title>
+	<h:outputStylesheet library="css" name="styles.css" />
+	<h:outputStylesheet library="css" name="bt-style.css" />
+</h:head>
+
+<h:body>
+
+	<h2>Welcome!</h2>
+	
+	<div class="column1">
+
+	<h3>Usuarios</h3>
+	
+	<h:form>
+	<h:commandButton action = "usuarios.xhtml" value = "Usuarios" />
+	</h:form>
+	
+	</div
+	
+	><div class="column1">
+	
+	<h3>Productos</h3>
+	
+	<h:form>
+	<h:commandButton action = "productos.xhtml" value = "Productos" />
+	</h:form>
+	
+	</div
+	
+	><div class="column1">
+	
+	<h3>Pedidos</h3>
+	
+	<h:form>
+	<h:commandButton action = "pedidos.xhtml" value = "Pedidos" />
+	</h:form>
+	
+	</div><div class="column1">
+	
+	<h3>Categorias</h3>
+	
+	<h:form>
+	<h:commandButton action = "categorias.xhtml" value = "Categorias" />
+	</h:form>
+	
+	</div><div class="column1">
+	
+	<h3>Proveedores</h3>
+	
+	<h:form>
+	<h:commandButton action = "proveedores.xhtml" value = "Proveedores" />
+	</h:form>
+	
+	</div><div class="column1">
+	
+	<h3>Roles</h3>
+	
+	<h:form>
+	<h:commandButton action = "roles.xhtml" value = "Roles" />
+	</h:form>
+	
+	</div><div class="column1">
+	
+	<h3>Medios de Pago</h3>
+	
+	<h:form>
+	<h:commandButton action = "mediosdepago.xhtml" value = "Medios de Pago" />
+	</h:form>
+	
+	</div>
+
+</h:body>
+</html>

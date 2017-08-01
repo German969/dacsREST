@@ -1,0 +1,101 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Webapp!</title>
+	<h:outputStylesheet library="css" name="styles.css" />
+	<h:outputStylesheet library="css" name="bt-style.css" />
+</h:head>
+
+<h:body>
+
+	<h2>Welcome</h2>
+
+	<h2>Roles</h2>
+
+	<h:form>
+	Filter: 
+		<h:inputText id="filterInput" value="#{rolBean.filter}" />
+	By:
+		<h:selectOneMenu value="#{rolBean.filterBy}">
+			<f:selectItem itemValue="1" itemLabel="ID Producto" />
+			<f:selectItem itemValue="2" itemLabel="Nombre" />
+		</h:selectOneMenu>
+
+		<h:commandButton id="submit2" value="Filter"
+			action="#{rolBean.getByFilter()}">
+		</h:commandButton>
+
+		<h:commandButton id="showAll" value="Show All"
+			action="#{rolBean.getAll()}">
+		</h:commandButton>
+
+		<br />
+		<br />
+
+		<h:dataTable value="#{rolBean.getAllRoles()}" var="rol"
+			border="2" styleClass="employeeTable"
+			headerClass="employeeTableHeader"
+			rowClasses="employeeTableOddRow,employeeTableEvenRow">
+			<h:column>
+				<f:facet name="header">ID Categoria</f:facet>
+				<h:outputText value="#{rol.id}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Nombre</f:facet>
+				<h:inputText value="#{rol.nombre}" size="9"
+					rendered="#{rol.canEdit}" required="true"
+					requiredMessage="Por favor, inserte el nombre" />
+				<h:outputText value="#{rol.nombre}"
+					rendered="#{not rol.canEdit}" />
+			</h:column>
+			
+			
+			<h:column>
+				<f:facet name="header">Edit</f:facet>
+				<h:commandButton value="Edit"
+					action="#{rolBean.editCategoria(rol)}"
+					rendered="#{not rol.canEdit}">
+					<f:setPropertyActionListener target="#{rolBean.rol}"
+						value="#{rol}" />
+				</h:commandButton>
+				<h:commandButton value="Cancel"
+					action="#{rolBean.notEditCategoria(rol)}"
+					rendered="#{rol.canEdit}">
+				</h:commandButton>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Delete</f:facet>
+				<h:commandButton value="Delete"
+					action="#{rolBean.deleteCategoria()}">
+					<f:setPropertyActionListener target="#{rolBean.rol}"
+						value="#{rol}" />
+				</h:commandButton>
+			</h:column>
+
+		</h:dataTable>
+
+		<h:commandButton value="Save Categoria"
+			action="#{rolBean.saveRoles}" />
+
+		<h:commandButton value="New Categoria"
+			action="#{rolBean.newCategoria()}" />
+
+		<h:messages style="color:red;margin:8px;" />
+
+	</h:form>
+
+	<br />
+
+	<h:form>
+		<h:commandButton action="home.xhtml" value="Return to Home" />
+	</h:form>
+	
+</h:body>
+</html>

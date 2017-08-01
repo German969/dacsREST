@@ -54,6 +54,18 @@ public class Pedido {
 	private MedioDePago mediodepago;
 	
 	@Transient
+	private boolean canEdit;
+	
+	@Transient
+	private boolean newPedido;
+	
+	@Transient
+	private String stringFecha;
+	
+	@Transient
+	private String stringFechaPago;
+	
+	@Transient
 	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 	public Pedido(){
@@ -78,6 +90,8 @@ public class Pedido {
 		this.fechaPago = fechapago;
 		this.mediodepago = mediodepago;
 		this.productos = productos;
+		this.stringFecha = formatter.format(fecha);
+		this.stringFechaPago = formatter.format(fechapago);
 	}
 
 
@@ -136,6 +150,38 @@ public class Pedido {
 
 	public void setMediodepago(MedioDePago mediodepago) {
 		this.mediodepago = mediodepago;
+	}
+	
+	public String getStringFecha() {
+		return stringFecha;
+	}
+
+	public String getStringFechaPago() {
+		return stringFechaPago;
+	}
+
+	public void setStringFecha(String stringFecha) {
+		this.stringFecha = stringFecha;
+	}
+
+	public void setStringFechaPago(String stringFechaPago) {
+		this.stringFechaPago = stringFechaPago;
+	}
+	
+	public boolean isCanEdit() {
+		return canEdit;
+	}
+
+	public void setCanEdit(boolean canEdit) {
+		this.canEdit = canEdit;
+	}
+
+	public boolean isNewPedido() {
+		return newPedido;
+	}
+
+	public void setNewPedido(boolean newPedido) {
+		this.newPedido = newPedido;
 	}
 	
 }

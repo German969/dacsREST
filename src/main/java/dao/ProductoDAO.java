@@ -11,9 +11,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import abm.ProductoFilter;
 import entities.Producto;
 import entities.Producto_;
 
@@ -100,6 +102,43 @@ public class ProductoDAO {
 			e.printStackTrace();
 			return 0;
 		}
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Producto> getByFilter(String name, String filterBy) {
+
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+
+		CriteriaQuery<Producto> query = builder.createQuery(Producto.class);
+
+		Root<Producto> root = query.from(Producto.class);
+
+		Predicate p;
+		
+		ProductoFilter pf = new ProductoFilter();
+		
+		pf.setCod(filterBy);
+		
+		if(filterBy.equals(new String("1"))){
+			
+			int foo = Integer.parseInt(name);
+			
+			p = builder.equal(root.get(Producto_.id), foo);
+			
+		}else{
+			
+			p = builder.like((Expression<String>) root.get(pf.getAttr()), "%" + name + "%");			
+			
+		}
+
+		query.where(p);
+
+		TypedQuery<Producto> typedQuery = em.createQuery(query);
+
+		List<Producto> rl = typedQuery.getResultList();
+
+		return rl;
 
 	}
 	

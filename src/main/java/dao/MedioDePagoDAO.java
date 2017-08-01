@@ -11,9 +11,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import abm.MedioDePagoFilter;
 import entities.MedioDePago;
 import entities.MedioDePago_;
 
@@ -101,6 +103,43 @@ public class MedioDePagoDAO {
 			e.printStackTrace();
 			return 0;
 		}
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<MedioDePago> getByFilter(String name, String filterBy) {
+
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+
+		CriteriaQuery<MedioDePago> query = builder.createQuery(MedioDePago.class);
+
+		Root<MedioDePago> root = query.from(MedioDePago.class);
+
+		Predicate p;
+		
+		MedioDePagoFilter mpf = new MedioDePagoFilter();
+		
+		mpf.setCod(filterBy);
+		
+		if(filterBy.equals(new String("1"))){
+			
+			int foo = Integer.parseInt(name);
+			
+			p = builder.equal(root.get(MedioDePago_.id), foo);
+			
+		}else{
+			
+			p = builder.like((Expression<String>) root.get(mpf.getAttr()), "%" + name + "%");			
+			
+		}
+
+		query.where(p);
+
+		TypedQuery<MedioDePago> typedQuery = em.createQuery(query);
+
+		List<MedioDePago> rl = typedQuery.getResultList();
+
+		return rl;
 
 	}
 

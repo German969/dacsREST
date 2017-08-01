@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -34,6 +35,28 @@ public class MedioDePago {
 	@OneToMany(fetch = FetchType.EAGER,mappedBy = "mediodepago")
 	List<Pedido> pedidos = new ArrayList<Pedido>();
 	
+	@Transient
+	private boolean canEdit;
+	
+	@Transient
+	private boolean newMedioDePago;
+	
+	public boolean isCanEdit() {
+		return canEdit;
+	}
+
+	public void setCanEdit(boolean canEdit) {
+		this.canEdit = canEdit;
+	}
+	
+	public boolean isNewMedioDePago() {
+		return newMedioDePago;
+	}
+
+	public void setNewMedioDePago(boolean newMedioDePago) {
+		this.newMedioDePago = newMedioDePago;
+	}
+	
 	public MedioDePago(){
 		
 	}
@@ -47,8 +70,8 @@ public class MedioDePago {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int id2) {
+		this.id = id2;
 	}
 
 	public String getNombre() {

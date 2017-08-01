@@ -1,0 +1,161 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Webapp!</title>
+	<h:outputStylesheet library="css" name="styles.css" />
+	<h:outputStylesheet library="css" name="bt-style.css" />
+</h:head>
+
+<h:body>
+
+	<h2>Welcome</h2>
+
+	<h2>Productos</h2>
+
+	<h:form>
+	Filter: 
+		<h:inputText id="filterInput" value="#{productoBean.filter}" />
+	By:
+		<h:selectOneMenu value="#{productoBean.filterBy}">
+			<f:selectItem itemValue="1" itemLabel="ID Producto" />
+			<f:selectItem itemValue="2" itemLabel="Nombre" />
+			<f:selectItem itemValue="3" itemLabel="Marca" />
+			<f:selectItem itemValue="4" itemLabel="Categoria" />
+			<f:selectItem itemValue="5" itemLabel="Proveedor" />
+		</h:selectOneMenu>
+
+		<h:commandButton id="submit2" value="Filter"
+			action="#{productoBean.getByFilter()}">
+		</h:commandButton>
+
+		<h:commandButton id="showAll" value="Show All"
+			action="#{productoBean.getAll()}">
+		</h:commandButton>
+
+		<br />
+		<br />
+
+		<h:dataTable value="#{productoBean.getAllProductos()}" var="producto"
+			border="2" styleClass="employeeTable"
+			headerClass="employeeTableHeader"
+			rowClasses="employeeTableOddRow,employeeTableEvenRow">
+			<h:column>
+				<f:facet name="header">ID Producto</f:facet>
+				<h:outputText value="#{producto.id}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Nombre</f:facet>
+				<h:inputText value="#{producto.nombre}" size="9"
+					rendered="#{producto.canEdit}" required="true"
+					requiredMessage="Por favor, inserte el nombre" />
+				<h:outputText value="#{producto.nombre}"
+					rendered="#{not producto.canEdit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Marca</f:facet>
+				<h:inputText value="#{producto.marca}" size="9"
+					rendered="#{producto.canEdit}" required="true"
+					requiredMessage="Por favor, inserte la marca" />
+				<h:outputText value="#{producto.marca}"
+					rendered="#{not producto.canEdit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Descripcion</f:facet>
+				<h:inputText value="#{producto.descripcion}" size="9"
+					rendered="#{producto.canEdit}" />
+				<h:outputText value="#{producto.descripcion}"
+					rendered="#{not producto.canEdit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Precio</f:facet>
+				<h:inputText value="#{producto.precio}" size="9"
+					rendered="#{producto.canEdit}" required="true"
+					requiredMessage="Por favor, inserte el precio">
+				</h:inputText>
+				<h:outputText value="#{producto.precio}"
+					rendered="#{not producto.canEdit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Comision</f:facet>
+				<h:inputText value="#{producto.comision}" size="9"
+					rendered="#{producto.canEdit}" />
+				<h:outputText value="#{producto.comision}"
+					rendered="#{not producto.canEdit}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Stock</f:facet>
+				<h:inputText value="#{producto.stock}" size="9"
+					rendered="#{producto.canEdit}" />
+				<h:outputText value="#{producto.stock}"
+					rendered="#{not producto.canEdit}" />
+			</h:column>
+						
+			<h:column>
+				<f:facet name="header">Categoria</f:facet>
+				<h:selectOneMenu value="#{productoBean.nameCategoria}"
+				rendered="#{producto.canEdit}">
+					<f:selectItems value="#{productoBean.getCategorias()}" />
+				</h:selectOneMenu>
+				<h:outputText value="#{producto.categoria}"
+					rendered="#{not producto.canEdit}" />
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Proveedor</f:facet>
+				<h:selectOneMenu value="#{productoBean.nameProveedor}"
+				rendered="#{producto.canEdit}">
+					<f:selectItems value="#{productoBean.getProveedores()}" />
+				</h:selectOneMenu>
+				<h:outputText value="#{producto.proveedor}"
+					rendered="#{not producto.canEdit}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Edit</f:facet>
+				<h:commandButton value="Edit"
+					action="#{productoBean.editProducto(producto)}"
+					rendered="#{not producto.canEdit}">
+					<f:setPropertyActionListener target="#{productoBean.producto}"
+						value="#{producto}" />
+				</h:commandButton>
+				<h:commandButton value="Cancel"
+					action="#{productoBean.notEditProducto(producto)}"
+					rendered="#{producto.canEdit}">
+				</h:commandButton>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Delete</f:facet>
+				<h:commandButton value="Delete"
+					action="#{productoBean.deleteProducto()}">
+					<f:setPropertyActionListener target="#{productoBean.producto}"
+						value="#{producto}" />
+				</h:commandButton>
+			</h:column>
+
+		</h:dataTable>
+
+		<h:commandButton value="Save Producto"
+			action="#{productoBean.saveProductos}" />
+
+		<h:commandButton value="New Producto"
+			action="#{productoBean.newProducto()}" />
+
+		<h:messages style="color:red;margin:8px;" />
+
+	</h:form>
+
+	<br />
+
+	<h:form>
+		<h:commandButton action="home.xhtml" value="Return to Home" />
+	</h:form>
+	
+</h:body>
+</html>

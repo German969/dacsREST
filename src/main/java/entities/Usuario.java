@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -85,6 +86,12 @@ public class Usuario {
 	@JsonBackReference
 	@OneToMany(fetch = FetchType.EAGER,mappedBy = "usuario")
 	private List<Pedido> pedidos = new ArrayList<Pedido>();
+	
+	@Transient
+	private boolean canEdit;
+	
+	@Transient
+	private boolean newUser;
 
 	public String getNombre() {
 		return nombre;
@@ -226,6 +233,7 @@ public class Usuario {
 		this.codigoPostal = codigoPostal;
 		this.direccion = direccion;
 		this.rol = rol;
+		canEdit = false;
 	}
 	
 	public Usuario(String nombre, String apellido, String cuit, String email, String user, String password, String telefono,
@@ -246,10 +254,25 @@ public class Usuario {
 		this.direccion = direccion;
 		this.rol = rol;
 		this.pedidos = pedidos;
+		canEdit = false;
 	}
 
 
+	public boolean isCanEdit() {
+		return canEdit;
+	}
+
+	public void setCanEdit(boolean canEdit) {
+		this.canEdit = canEdit;
+	}
 	
+	public boolean isNewUser() {
+		return newUser;
+	}
+
+	public void setNewUser(boolean newUser) {
+		this.newUser = newUser;
+	}
 
 	
 	@Override

@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -31,6 +32,12 @@ public class Rol {
 	@JsonBackReference
 	@OneToMany(fetch = FetchType.EAGER,mappedBy = "rol")
 	private List<Usuario> usuarios = new ArrayList<Usuario>();
+	
+	@Transient
+	private boolean canEdit;
+	
+	@Transient
+	private boolean newRol;
 
 	public int getId() {
 		return id;
@@ -68,6 +75,22 @@ public class Rol {
 	@Override
 	public String toString(){
 		return nombre;
+	}
+	
+	public boolean isCanEdit() {
+		return canEdit;
+	}
+
+	public void setCanEdit(boolean canEdit) {
+		this.canEdit = canEdit;
+	}
+	
+	public boolean isNewRol() {
+		return newRol;
+	}
+
+	public void setNewRol(boolean newRol) {
+		this.newRol = newRol;
 	}
 	
 }

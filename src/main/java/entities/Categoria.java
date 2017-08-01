@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -33,6 +34,12 @@ public class Categoria {
 	@JsonBackReference
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "categoria")
 	private List<Producto> productos = new ArrayList<Producto>();
+	
+	@Transient
+	private boolean canEdit;
+	
+	@Transient
+	private boolean newCategoria;
 	
 	@Override
 	public String toString(){
@@ -72,6 +79,22 @@ public class Categoria {
 
 	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
+	}
+	
+	public boolean isCanEdit() {
+		return canEdit;
+	}
+
+	public void setCanEdit(boolean canEdit) {
+		this.canEdit = canEdit;
+	}
+	
+	public boolean isNewCategoria() {
+		return newCategoria;
+	}
+
+	public void setNewCategoria(boolean newCategoria) {
+		this.newCategoria = newCategoria;
 	}
 	
 }

@@ -11,9 +11,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import abm.UsuarioFilter;
 import entities.Usuario;
 import entities.Usuario_;
 
@@ -106,6 +108,43 @@ public Usuario getUsuarioByName(String name) {
 			e.printStackTrace();
 			return 0;
 		}
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Usuario> getByFilter(String name, String filterBy) {
+
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+
+		CriteriaQuery<Usuario> query = builder.createQuery(Usuario.class);
+
+		Root<Usuario> root = query.from(Usuario.class);
+
+		Predicate p;
+		
+		UsuarioFilter uf = new UsuarioFilter();
+		
+		uf.setCod(filterBy);
+		
+		if(filterBy.equals(new String("1"))){
+			
+			int foo = Integer.parseInt(name);
+			
+			p = builder.equal(root.get(Usuario_.id), foo);
+			
+		}else{
+			
+			p = builder.like((Expression<String>) root.get(uf.getAttr()), "%" + name + "%");			
+			
+		}
+
+		query.where(p);
+
+		TypedQuery<Usuario> typedQuery = em.createQuery(query);
+
+		List<Usuario> rl = typedQuery.getResultList();
+
+		return rl;
 
 	}
 
